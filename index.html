@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GABI CUP 2026 | CONVITE EXCLUSIVO</title>
+    <title>GABI CUP 2026 | CONVITE LENDÁRIO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -12,8 +12,11 @@
             --primary-gold: #FFD700;
             --deep-blue: #001233;
             --glass: rgba(255, 255, 255, 0.05);
+            --gold-gradient: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body { 
             font-family: 'Outfit', sans-serif; 
             background-color: var(--deep-blue); 
@@ -21,185 +24,264 @@
             overflow-x: hidden;
         }
 
-        .font-sport { font-family: 'Bangers', cursive; letter-spacing: 2px; }
+        .font-sport { font-family: 'Bangers', cursive; letter-spacing: 3px; }
 
-        /* Fundo Animado */
-        .bg-glow {
+        /* Background Estilo Abertura da Copa */
+        .animated-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -10%, #0038a8 0%, #001233 100%);
+            background: radial-gradient(circle at 50% -20%, #0038a8 0%, #001233 100%);
             z-index: -1;
         }
-
-        /* Card Estilo Figurinha Rara */
-        .sticker-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Efeito de brilho que passa pela figurinha */
-        .sticker-card::after {
+        .animated-bg::before {
             content: "";
             position: absolute;
-            top: -100%; left: -100%;
-            width: 50%; height: 300%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 4s infinite;
+            inset: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.2;
+            animation: starsDrift 100s linear infinite;
         }
 
-        @keyframes shine {
-            0% { top: -100%; left: -100%; }
-            20% { top: 100%; left: 100%; }
-            100% { top: 100%; left: 100%; }
+        @keyframes starsDrift {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
         }
 
+        /* CARD FIGURINHA LENDÁRIA DOURADA */
+        .sticker-wrapper {
+            position: relative;
+            padding: 10px;
+            background: var(--gold-gradient);
+            border-radius: 2.6rem;
+            box-shadow: 0 0 30px rgba(191, 149, 63, 0.4);
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+
+        .sticker-card {
+            background: #001a4d;
+            border-radius: 2.2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Brilho Holográfico que corre pela figurinha */
+        .holo-overlay {
+            position: absolute;
+            top: -150%; left: -150%;
+            width: 300%; height: 300%;
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0) 45%, 
+                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0) 55%, 
+                rgba(255,255,255,0) 100%);
+            animation: holoSweep 5s golden-sweep infinite;
+            pointer-events: none;
+        }
+
+        @keyframes holoSweep {
+            0% { transform: translate(0,0) rotate(0deg); }
+            20% { transform: translate(20%, 20%) rotate(5deg); }
+            100% { transform: translate(20%, 20%) rotate(5deg); }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+
+        /* Efeito de Luz Dourada Giratória ao fundo */
+        .gold-aura {
+            position: absolute;
+            width: 150%; height: 150%;
+            background: conic-gradient(from 0deg, transparent, var(--primary-gold), transparent);
+            top: -25%; left: -25%;
+            animation: rotateAura 4s linear infinite;
+            opacity: 0.15;
+            filter: blur(20px);
+        }
+
+        @keyframes rotateAura {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Páginas e Transições */
         .page { display: none; }
-        .page.active { display: block; animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .page.active { display: block; animation: pageIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 
-        @keyframes reveal {
-            from { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+        @keyframes pageIn {
+            from { opacity: 0; transform: scale(0.9); filter: blur(10px); }
             to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
-        /* Erro customizado no Input */
-        .input-error { border-bottom: 2px solid #ff4d4d !important; animation: shake 0.4s; }
+        /* Validação Customizada Input */
+        .input-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .input-box:focus { border-color: var(--primary-gold); background: rgba(255,255,255,0.08); }
+        
+        .error-shake { 
+            animation: shake 0.4s; 
+            border-bottom: 2px solid #ff4444 !important;
+        }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
-        .insta-btn {
+        /* Insta Card Style */
+        .insta-card {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 10px 20px rgba(220, 39, 67, 0.2);
         }
+
+        .btn-main {
+            background: var(--gold-gradient);
+            color: #2b1d00;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 10px 40px rgba(191, 149, 63, 0.3);
+            transition: 0.3s;
+        }
+        .btn-main:active { transform: scale(0.95); }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div class="animated-bg"></div>
 
     <div class="max-w-md mx-auto min-h-screen flex flex-col pb-10">
         
-        <div id="successModal" class="hidden fixed inset-0 z-[1000] flex items-center justify-center px-6 bg-black/90 backdrop-blur-md">
-            <div class="sticker-card p-10 text-center w-full max-w-sm border-2 border-yellow-400">
-                <div class="text-7xl mb-6">🏆</div>
-                <h2 class="font-sport text-5xl text-yellow-400 mb-2">CONVOCADO!</h2>
-                <p class="text-gray-300 mb-8 font-light">Sua presença foi confirmada na escalação oficial da Gabi Cup.</p>
-                <button onclick="closeModal()" class="w-full bg-yellow-400 text-blue-900 font-bold py-5 rounded-2xl uppercase text-xs tracking-[2px]">Fechar</button>
+        <div id="successModal" class="hidden fixed inset-0 z-[999] flex items-center justify-center px-6 bg-black/95 backdrop-blur-xl">
+            <div class="sticker-wrapper p-1 w-full max-w-sm">
+                <div class="bg-[#001233] p-10 rounded-[2.2rem] text-center">
+                    <div class="text-7xl mb-4">🏆</div>
+                    <h2 class="font-sport text-5xl text-yellow-400 mb-2">CONVOCADO!</h2>
+                    <p class="text-gray-400 text-sm mb-8">Sua escalação foi processada com sucesso. Nos vemos no campo!</p>
+                    <button onclick="closeModal()" class="w-full btn-main py-4 rounded-xl text-xs tracking-widest">Fechar</button>
+                </div>
             </div>
         </div>
 
-        <section id="home" class="page active px-6 pt-10 space-y-8">
+        <section id="home" class="page active px-6 pt-12 space-y-8">
             
-            <header class="text-center space-y-2">
-                <p class="text-yellow-400 font-bold tracking-[0.4em] text-[9px] uppercase opacity-70">Exclusive Event</p>
-                <h1 class="text-7xl font-sport leading-none text-white drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]">GABI CUP</h1>
-                <div id="mini-timer" class="text-[10px] font-bold bg-white/10 px-4 py-1 rounded-full inline-block border border-white/10">
-                    FALTAM: <span id="days">00</span>D : <span id="hours">00</span>H : <span id="mins">00</span>M
+            <header class="text-center space-y-3">
+                <p class="text-yellow-400 font-bold tracking-[0.4em] text-[9px] uppercase opacity-80">Qatar 2026 Edition</p>
+                <h1 class="text-7xl font-sport leading-none drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">GABI CUP</h1>
+                <div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2 rounded-full backdrop-blur-md">
+                    <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-bold tracking-widest">FALTAM: <span id="days">00</span>D : <span id="hours">00</span>H : <span id="mins">00</span>M</span>
                 </div>
             </header>
 
-            <div class="relative group">
-                <div class="absolute -inset-2 bg-yellow-400/20 blur-2xl rounded-full opacity-50"></div>
-                <div class="sticker-card p-2 transform transition-transform duration-500 hover:scale-[1.02]">
-                    <img src="https://i.imgur.com/4DwHOAB.jpeg" class="w-full rounded-[1.8rem]">
-                    <div class="absolute top-6 left-6 bg-yellow-400 text-blue-900 font-sport text-2xl w-12 h-12 flex items-center justify-center rounded-lg shadow-xl">
+            <div class="sticker-wrapper">
+                <div class="gold-aura"></div>
+                <div class="sticker-card">
+                    <div class="holo-overlay"></div>
+                    <img src="https://i.imgur.com/4DwHOAB.jpeg" class="w-full h-auto">
+                    
+                    <div class="absolute top-4 left-4 bg-yellow-400 text-blue-900 font-sport text-3xl w-14 h-14 flex items-center justify-center rounded-2xl shadow-2xl border-4 border-white/20">
                         10
                     </div>
+
                     <div class="absolute bottom-4 left-0 right-0 text-center">
-                        <span class="bg-black/60 backdrop-blur-md px-6 py-1 rounded-full text-[10px] font-bold tracking-widest border border-white/10">FIGURINHA LENDÁRIA</span>
+                        <div class="inline-block bg-yellow-400 text-blue-900 px-6 py-1 rounded-full text-[10px] font-black tracking-[0.2em] shadow-xl">
+                            FIGURINHA LENDÁRIA
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <div class="sticker-card p-4 text-center border-white/5">
-                    <span class="text-2xl block mb-1">📅</span>
-                    <p class="text-[9px] uppercase text-yellow-400 font-bold mb-1">Data</p>
-                    <p class="text-sm font-bold">02 JUN 2026 ÁS 16H</p>
+                <div class="bg-white/5 border border-white/10 p-5 rounded-3xl text-center">
+                    <p class="text-[9px] text-yellow-400 font-bold uppercase tracking-widest mb-1">Apito Inicial</p>
+                    <p class="text-md font-bold">02 JUN • 16h</p>
                 </div>
-                <div class="sticker-card p-4 text-center border-white/5">
-                    <span class="text-2xl block mb-1">📍</span>
-                    <p class="text-[9px] uppercase text-yellow-400 font-bold mb-1">Local</p>
-                    <p class="text-sm font-bold italic underline"><a href="https://maps.google.com" target="_blank">ENDEREÇO</a></p>
+                <div class="bg-white/5 border border-white/10 p-5 rounded-3xl text-center">
+                    <p class="text-[9px] text-yellow-400 font-bold uppercase tracking-widest mb-1">Estádio</p>
+                    <a href="https://maps.google.com" target="_blank" class="text-xs font-bold underline decoration-yellow-400">Rooftop Paulista</a>
                 </div>
             </div>
 
-            <div class="px-2">
-                <a href="https://instagram.com/gabrieledionizzio" target="_blank" class="flex items-center justify-between p-4 sticker-card border-white/5 hover:bg-white/10 transition">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full insta-btn flex items-center justify-center text-xl shadow-lg">📸</div>
+            <div class="px-1">
+                <a href="https://instagram.com/gabrieledionizzio" target="_blank" class="flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-white/10 transition group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 insta-card rounded-2xl flex items-center justify-center text-2xl shadow-xl transform group-hover:rotate-6 transition">📸</div>
                         <div>
-                            <p class="text-[9px] uppercase font-bold opacity-50">Siga a Craque</p>
-                            <p class="font-bold text-sm">@gabrieledionizzio</p>
+                            <p class="text-[9px] font-bold opacity-40 uppercase tracking-widest">Siga a Craque</p>
+                            <p class="font-bold text-lg">@gabrieledionizzio</p>
                         </div>
                     </div>
                     <span class="text-yellow-400">➔</span>
                 </a>
             </div>
 
-            <button onclick="showPage('rsvp')" class="w-full bg-yellow-400 text-blue-900 font-bold py-6 rounded-[2rem] text-xl font-sport tracking-widest shadow-[0_15px_40px_rgba(255,215,0,0.3)] active:scale-95 transition-transform">
-                CONFIRMAR ESCALAÇÃO ⚽
+            <button onclick="showPage('rsvp')" class="w-full btn-main py-6 rounded-[2.2rem] text-xl font-sport tracking-widest">
+                Confirmar Convocação ⚽
             </button>
         </section>
 
-        <section id="rsvp" class="page px-6 pt-10">
-            <button onclick="showPage('home')" class="text-[10px] font-bold opacity-40 mb-10 tracking-[3px]">← VOLTAR AO ESTÁDIO</button>
+        <section id="rsvp" class="page px-6 pt-12">
+            <button onclick="showPage('home')" class="text-[10px] font-bold opacity-30 mb-12 tracking-[3px]">← VOLTAR AO INÍCIO</button>
             
-            <div id="step-1" class="space-y-6">
+            <div id="step-1" class="space-y-8">
                 <div class="space-y-1">
-                    <h2 class="text-5xl font-sport text-yellow-400">QUEM VAI?</h2>
-                    <p class="text-xs opacity-50 italic">Sua vaga no time depende do seu nome abaixo:</p>
+                    <h2 class="text-5xl font-sport text-yellow-400 leading-none">IDENTIFICAÇÃO</h2>
+                    <p class="text-xs opacity-50 italic">Insira seu nome para a lista oficial da FIFA.</p>
                 </div>
 
-                <div class="relative">
-                    <input type="text" id="guestName" class="w-full bg-transparent border-b border-white/20 p-5 text-xl focus:outline-none focus:border-yellow-400 transition-all placeholder-white/5" placeholder="Nome Completo">
-                    <p id="errorMsg" class="hidden text-red-400 text-[10px] mt-2 font-bold uppercase tracking-widest">⚠️ Digite seu nome para continuar!</p>
+                <div class="space-y-4">
+                    <div class="relative">
+                        <input type="text" id="guestName" class="input-box w-full p-6 rounded-2xl text-xl focus:outline-none placeholder-white/5" placeholder="Nome Completo">
+                        <p id="errorMsg" class="hidden text-red-500 text-[10px] mt-3 font-bold uppercase tracking-[2px] animate-pulse">⚠️ Nome obrigatório para escalação!</p>
+                    </div>
+                    <button onclick="goToGifts()" class="w-full bg-white text-blue-900 font-bold py-6 rounded-2xl font-sport text-xl tracking-widest">PRÓXIMA FASE</button>
                 </div>
-
-                <button onclick="goToGifts()" class="w-full bg-white text-blue-900 font-bold py-5 rounded-2xl font-sport text-xl tracking-widest">PRÓXIMO PASSO</button>
             </div>
 
-            <div id="step-2" class="hidden space-y-8">
+            <div id="step-2" class="hidden space-y-10">
                 <div class="space-y-1">
-                    <h2 class="text-5xl font-sport text-yellow-400 leading-none">SUGESTÕES DE MIMOS</h2>
-                    <p class="text-[10px] opacity-60 uppercase tracking-widest">Opcional, mas o time agradece!</p>
+                    <h2 class="text-5xl font-sport text-yellow-400">PRESENTES</h2>
+                    <p class="text-[10px] opacity-60 uppercase tracking-widest">Contribua com o elenco (opcional):</p>
                 </div>
 
                 <div class="space-y-3" id="giftList">
-                    <label class="flex items-center justify-between p-5 sticker-card border-white/10 cursor-pointer hover:bg-white/5">
-                        <span class="font-bold text-sm tracking-tight">Voucher Sephora</span>
-                        <input type="checkbox" value="Sephora">
+                    <label class="flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-2xl cursor-pointer hover:bg-white/10 transition">
+                        <span class="font-bold">Voucher Sephora</span>
+                        <input type="checkbox" value="Sephora" class="w-6 h-6 accent-yellow-400">
                     </label>
-                    <label class="flex items-center justify-between p-5 sticker-card border-white/10 cursor-pointer hover:bg-white/5">
-                        <span class="font-bold text-sm tracking-tight">Kit Blogueira Camisa 10</span>
-                        <input type="checkbox" value="Kit Blogueira">
+                    <label class="flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-2xl cursor-pointer hover:bg-white/10 transition">
+                        <span class="font-bold">Kit Blogueira Camisa 10</span>
+                        <input type="checkbox" value="Kit Blogueira" class="w-6 h-6 accent-yellow-400">
                     </label>
-                    <label class="flex items-center justify-between p-5 sticker-card border-blue-400/30 bg-blue-500/10">
-                        <span class="font-bold text-sm tracking-tight text-blue-300 italic">Transferência via PIX</span>
-                        <input type="checkbox" value="PIX">
+                    <label class="flex items-center justify-between p-6 bg-blue-500/10 border border-blue-400/30 rounded-2xl cursor-pointer">
+                        <span class="font-bold text-blue-300 italic">PIX de qualquer valor</span>
+                        <input type="checkbox" value="PIX" class="w-6 h-6 accent-blue-400">
                     </label>
                 </div>
 
-                <div class="text-center p-6 sticker-card border-dashed">
-                    <p class="text-[9px] font-bold text-yellow-400 uppercase tracking-widest mb-2">Chave PIX da Aniversariante</p>
-                    <code class="block bg-black/40 p-3 rounded-lg text-[10px] font-mono border border-white/5 mb-2 select-all">pixdagabi@influencer.com</code>
-                    <p class="text-[8px] opacity-40">Toque para copiar a chave</p>
+                <div class="text-center p-6 bg-black/40 rounded-3xl border border-dashed border-white/20">
+                    <p class="text-[9px] font-bold text-yellow-400 uppercase tracking-widest mb-2">Chave PIX</p>
+                    <code class="block text-xs font-mono mb-2 select-all">pixdagabi@influencer.com</code>
+                    <p class="text-[8px] opacity-30">Toque para copiar a chave</p>
                 </div>
 
-                <button onclick="finalizarConfirmacao()" class="w-full bg-yellow-400 text-blue-900 font-bold py-6 rounded-[2rem] font-sport text-xl shadow-2xl">FINALIZAR 📱</button>
+                <button onclick="finalizarConfirmacao()" class="w-full btn-main py-6 rounded-[2.2rem] font-sport text-2xl tracking-widest">FINALIZAR 📱</button>
             </div>
         </section>
 
-        <footer class="mt-auto px-6 text-center space-y-1">
-            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full mb-8"></div>
-            <p class="text-[8px] font-bold text-white/20 uppercase tracking-[5px]">Developed by</p>
-            <p class="text-xl font-sport text-yellow-400 tracking-[3px] opacity-80">RENATO BRILHANTE</p>
+        <footer class="mt-auto px-6 text-center">
+            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full mb-10"></div>
+            <p class="text-[8px] font-bold text-white/20 uppercase tracking-[0.5em] mb-2">Software Engineered by</p>
+            <div class="inline-block bg-white/5 px-8 py-3 rounded-2xl border border-white/10 shadow-2xl">
+                <p class="text-xl font-sport text-yellow-400 tracking-[4px]">RENATO BRILHANTE</p>
+            </div>
         </footer>
     </div>
 
@@ -207,10 +289,11 @@
         const WHATSAPP_NUMERO = "5511999999999"; 
         const DATA_EVENTO = new Date('June 2, 2026 16:00:00').getTime();
 
+        // Timer
         function updateTimer() {
             const agora = new Date().getTime();
             const d = DATA_EVENTO - agora;
-            if (d < 0) return document.getElementById('mini-timer').innerHTML = "O JOGO COMEÇOU!";
+            if (d < 0) return;
             
             document.getElementById('days').innerText = String(Math.floor(d / (1000*60*60*24))).padStart(2, '0');
             document.getElementById('hours').innerText = String(Math.floor((d % (1000*60*60*24)) / (1000*60*60))).padStart(2, '0');
@@ -219,20 +302,22 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
+        // Navegação
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Validação de Nome
         function goToGifts() {
             const input = document.getElementById('guestName');
             const error = document.getElementById('errorMsg');
             
             if(!input.value.trim()) {
-                input.classList.add('input-error');
+                input.classList.add('error-shake');
                 error.classList.remove('hidden');
-                setTimeout(() => input.classList.remove('input-error'), 400);
+                setTimeout(() => input.classList.remove('error-shake'), 400);
                 return;
             }
             error.classList.add('hidden');
@@ -245,12 +330,19 @@
             const selecionados = [];
             document.querySelectorAll('#giftList input:checked').forEach(i => selecionados.push(i.value));
             
-            const mimosTxt = selecionados.length > 0 ? selecionados.join(", ") : "Presença confirmada!";
+            const mimosTxt = selecionados.length > 0 ? selecionados.join(", ") : "Confirmado!";
             const textoWhats = `*GABI CUP 2026* 🏆\n\n⚽ *CRAQUE:* ${nome}\n🎁 *MIMO:* ${mimosTxt}`;
             
             window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWhats)}`, '_blank');
             document.getElementById('successModal').classList.remove('hidden');
-            confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#FFD700', '#FFFFFF', '#0038A8'] });
+            
+            // Efeito Confete de Campeão
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#FFFFFF', '#0038A8', '#009b3a']
+            });
         }
 
         function closeModal() {
