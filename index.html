@@ -11,9 +11,7 @@
         :root {
             --primary-gold: #FFD700;
             --deep-blue: #001233;
-            --brazil-green: #009b3a;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         body { 
@@ -21,279 +19,223 @@
             background-color: var(--deep-blue); 
             color: white; 
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .font-sport { font-family: 'Bangers', cursive; letter-spacing: 3px; }
+        .font-sport { font-family: 'Bangers', cursive; letter-spacing: 2px; }
 
-        /* Animação de Background Fluido */
-        .animated-bg {
+        /* Fundo Animado */
+        .bg-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, #0038a8 0%, #001233 80%);
+            background: radial-gradient(circle at 50% -10%, #0038a8 0%, #001233 100%);
             z-index: -1;
         }
 
-        .animated-bg::after {
+        /* Card Estilo Figurinha Rara */
+        .sticker-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efeito de brilho que passa pela figurinha */
+        .sticker-card::after {
             content: "";
             position: absolute;
-            inset: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3;
-            animation: drift 60s linear infinite;
+            top: -100%; left: -100%;
+            width: 50%; height: 300%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 4s infinite;
         }
 
-        @keyframes drift {
-            from { background-position: 0 0; }
-            to { background-position: 1000px 1000px; }
-        }
-
-        /* Glassmorphism Ultra */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border-radius: 2rem;
+        @keyframes shine {
+            0% { top: -100%; left: -100%; }
+            20% { top: 100%; left: 100%; }
+            100% { top: 100%; left: 100%; }
         }
 
         .page { display: none; }
-        .page.active { display: block; animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .page.active { display: block; animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        @keyframes reveal {
+            from { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
-        /* Efeito de Brilho no Título */
-        .glitch-text {
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            background: linear-gradient(to bottom, #fff 30%, var(--primary-gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Erro customizado no Input */
+        .input-error { border-bottom: 2px solid #ff4d4d !important; animation: shake 0.4s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
-        /* Checkbox Customizado */
-        input[type="checkbox"] {
-            appearance: none;
-            width: 24px; height: 24px;
-            border: 2px solid var(--primary-gold);
-            border-radius: 6px;
-            cursor: pointer;
-            position: relative;
-            transition: 0.3s;
-        }
-        input[type="checkbox"]:checked { background: var(--primary-gold); }
-        input[type="checkbox"]:checked::after {
-            content: "✓";
-            position: absolute;
-            color: var(--deep-blue);
-            font-weight: bold;
-            left: 50%; top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Botão Magnético */
-        .btn-main {
-            background: var(--primary-gold);
-            color: var(--deep-blue);
-            font-weight: 800;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-        .btn-main:active { transform: scale(0.95); }
-
-        .line-detail {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
-            width: 100%;
-            margin: 1rem 0;
+        .insta-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
     </style>
 </head>
 <body>
 
-    <div class="animated-bg"></div>
+    <div class="bg-glow"></div>
 
-    <div class="max-w-md mx-auto min-h-screen relative flex flex-col pb-10">
+    <div class="max-w-md mx-auto min-h-screen flex flex-col pb-10">
         
         <div id="successModal" class="hidden fixed inset-0 z-[1000] flex items-center justify-center px-6 bg-black/90 backdrop-blur-md">
-            <div class="glass-card p-10 text-center w-full max-w-sm border-2 border-yellow-400">
-                <div class="text-7xl mb-6">🎫</div>
-                <h2 class="font-sport text-5xl text-yellow-400 mb-4">INGRESSO GARANTIDO</h2>
-                <p class="text-gray-300 mb-8 leading-relaxed">Você está oficialmente na escalação. O QR Code será liberado na entrada.</p>
-                <button onclick="closeModal()" class="w-full btn-main py-5 rounded-2xl uppercase tracking-widest text-sm">Fechar Painel</button>
+            <div class="sticker-card p-10 text-center w-full max-w-sm border-2 border-yellow-400">
+                <div class="text-7xl mb-6">🏆</div>
+                <h2 class="font-sport text-5xl text-yellow-400 mb-2">CONVOCADO!</h2>
+                <p class="text-gray-300 mb-8 font-light">Sua presença foi confirmada na escalação oficial da Gabi Cup.</p>
+                <button onclick="closeModal()" class="w-full bg-yellow-400 text-blue-900 font-bold py-5 rounded-2xl uppercase text-xs tracking-[2px]">Fechar</button>
             </div>
         </div>
 
         <section id="home" class="page active px-6 pt-10 space-y-8">
             
-            <div class="text-center space-y-2">
-                <p class="text-yellow-400 font-bold tracking-[0.3em] text-[10px] uppercase">Official Invitation</p>
-                <h1 class="text-7xl font-sport glitch-text leading-none">GABI CUP</h1>
-                <div class="inline-block glass-card px-4 py-1 mt-2">
-                    <span class="text-[10px] font-bold text-white/70 tracking-tighter uppercase">🏆 World Class Celebration</span>
+            <header class="text-center space-y-2">
+                <p class="text-yellow-400 font-bold tracking-[0.4em] text-[9px] uppercase opacity-70">Exclusive Event</p>
+                <h1 class="text-7xl font-sport leading-none text-white drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]">GABI CUP</h1>
+                <div id="mini-timer" class="text-[10px] font-bold bg-white/10 px-4 py-1 rounded-full inline-block border border-white/10">
+                    FALTAM: <span id="days">00</span>D : <span id="hours">00</span>H : <span id="mins">00</span>M
                 </div>
-            </div>
+            </header>
 
-            <div class="relative">
-                <div class="absolute -inset-4 bg-yellow-400/20 blur-3xl rounded-full"></div>
-                <div class="relative glass-card p-2 transform -rotate-1 shadow-2xl">
-                    <img src="https://i.imgur.com/4DwHOAB.jpeg" class="w-full rounded-[1.5rem] grayscale-[20%] hover:grayscale-0 transition-all duration-700">
-                    <div class="absolute bottom-6 right-6 glass-card px-4 py-2 border-yellow-400/50">
-                        <span class="font-sport text-yellow-400 text-xl">10</span>
+            <div class="relative group">
+                <div class="absolute -inset-2 bg-yellow-400/20 blur-2xl rounded-full opacity-50"></div>
+                <div class="sticker-card p-2 transform transition-transform duration-500 hover:scale-[1.02]">
+                    <img src="https://i.imgur.com/4DwHOAB.jpeg" class="w-full rounded-[1.8rem]">
+                    <div class="absolute top-6 left-6 bg-yellow-400 text-blue-900 font-sport text-2xl w-12 h-12 flex items-center justify-center rounded-lg shadow-xl">
+                        10
+                    </div>
+                    <div class="absolute bottom-4 left-0 right-0 text-center">
+                        <span class="bg-black/60 backdrop-blur-md px-6 py-1 rounded-full text-[10px] font-bold tracking-widest border border-white/10">FIGURINHA LENDÁRIA</span>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card p-6 border-white/5 flex justify-around text-center">
-                <div><span id="days" class="text-3xl font-sport text-yellow-400 block leading-none">00</span><span class="text-[9px] uppercase tracking-widest opacity-50">Dias</span></div>
-                <div class="w-px h-8 bg-white/10 my-auto"></div>
-                <div><span id="hours" class="text-3xl font-sport text-yellow-400 block leading-none">00</span><span class="text-[9px] uppercase tracking-widest opacity-50">Horas</span></div>
-                <div class="w-px h-8 bg-white/10 my-auto"></div>
-                <div><span id="mins" class="text-3xl font-sport text-yellow-400 block leading-none">00</span><span class="text-[9px] uppercase tracking-widest opacity-50">Mins</span></div>
-            </div>
-
-            <div class="space-y-4">
-                <div class="glass-card p-6 flex items-center gap-6 group hover:border-yellow-400/50 transition">
-                    <div class="w-14 h-14 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-3xl">🏟️</div>
-                    <div>
-                        <h3 class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Estádio Sede</h3>
-                        <p class="font-semibold text-lg">Rooftop Lounge Paulista</p>
-                        <a href="#" class="text-xs text-blue-400 underline font-bold mt-1 inline-block">MAPA DO CAMPO</a>
-                    </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="sticker-card p-4 text-center border-white/5">
+                    <span class="text-2xl block mb-1">📅</span>
+                    <p class="text-[9px] uppercase text-yellow-400 font-bold mb-1">Data</p>
+                    <p class="text-sm font-bold">02 JUN 2026 ÁS 16H</p>
                 </div>
-
-                <div class="glass-card p-6 flex items-center gap-6">
-                    <div class="w-14 h-14 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-3xl">⚽</div>
-                    <div>
-                        <h3 class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Apito Inicial</h3>
-                        <p class="font-semibold text-lg">02 de Junho • 16h</p>
-                    </div>
+                <div class="sticker-card p-4 text-center border-white/5">
+                    <span class="text-2xl block mb-1">📍</span>
+                    <p class="text-[9px] uppercase text-yellow-400 font-bold mb-1">Local</p>
+                    <p class="text-sm font-bold italic underline"><a href="https://maps.google.com" target="_blank">ENDEREÇO</a></p>
                 </div>
             </div>
 
-            <button onclick="showPage('rsvp')" class="w-full btn-main py-6 rounded-3xl text-xl font-sport tracking-[2px] shadow-[0_20px_50px_rgba(255,215,0,0.2)]">
-                SOLICITAR CONVOCAÇÃO
+            <div class="px-2">
+                <a href="https://instagram.com/gabrieledionizzio" target="_blank" class="flex items-center justify-between p-4 sticker-card border-white/5 hover:bg-white/10 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full insta-btn flex items-center justify-center text-xl shadow-lg">📸</div>
+                        <div>
+                            <p class="text-[9px] uppercase font-bold opacity-50">Siga a Craque</p>
+                            <p class="font-bold text-sm">@gabrieledionizzio</p>
+                        </div>
+                    </div>
+                    <span class="text-yellow-400">➔</span>
+                </a>
+            </div>
+
+            <button onclick="showPage('rsvp')" class="w-full bg-yellow-400 text-blue-900 font-bold py-6 rounded-[2rem] text-xl font-sport tracking-widest shadow-[0_15px_40px_rgba(255,215,0,0.3)] active:scale-95 transition-transform">
+                CONFIRMAR ESCALAÇÃO ⚽
             </button>
         </section>
 
         <section id="rsvp" class="page px-6 pt-10">
-            <button onclick="showPage('home')" class="text-[10px] font-bold opacity-50 mb-10 tracking-widest">← VOLTAR AO INÍCIO</button>
+            <button onclick="showPage('home')" class="text-[10px] font-bold opacity-40 mb-10 tracking-[3px]">← VOLTAR AO ESTÁDIO</button>
             
-            <div id="step-1" class="space-y-8">
-                <div class="space-y-2">
-                    <h2 class="text-5xl font-sport text-yellow-400">IDENTIFICAÇÃO</h2>
-                    <p class="text-sm opacity-60">Insira seu nome para validação na lista VIP.</p>
+            <div id="step-1" class="space-y-6">
+                <div class="space-y-1">
+                    <h2 class="text-5xl font-sport text-yellow-400">QUEM VAI?</h2>
+                    <p class="text-xs opacity-50 italic">Sua vaga no time depende do seu nome abaixo:</p>
                 </div>
 
-                <div class="space-y-6">
-                    <div class="relative">
-                        <input type="text" id="guestName" class="w-full bg-white/5 border-b-2 border-white/20 p-5 text-xl focus:outline-none focus:border-yellow-400 transition-all placeholder-white/10" placeholder="NOME DO CRAQUE">
-                    </div>
-                    <button onclick="goToGifts()" class="w-full btn-main py-6 rounded-3xl font-sport text-xl">PRÓXIMA FASE ➔</button>
+                <div class="relative">
+                    <input type="text" id="guestName" class="w-full bg-transparent border-b border-white/20 p-5 text-xl focus:outline-none focus:border-yellow-400 transition-all placeholder-white/5" placeholder="Nome Completo">
+                    <p id="errorMsg" class="hidden text-red-400 text-[10px] mt-2 font-bold uppercase tracking-widest">⚠️ Digite seu nome para continuar!</p>
                 </div>
+
+                <button onclick="goToGifts()" class="w-full bg-white text-blue-900 font-bold py-5 rounded-2xl font-sport text-xl tracking-widest">PRÓXIMO PASSO</button>
             </div>
 
             <div id="step-2" class="hidden space-y-8">
-                <div class="space-y-2">
-                    <h2 class="text-5xl font-sport text-yellow-400">SUGESTÕES DE MIMOS</h2>
-                    <p class="text-sm opacity-60">O melhor presente é o seu gol na festa! Mas se quiser fortalecer o time:</p>
+                <div class="space-y-1">
+                    <h2 class="text-5xl font-sport text-yellow-400 leading-none">SUGESTÕES DE MIMOS</h2>
+                    <p class="text-[10px] opacity-60 uppercase tracking-widest">Opcional, mas o time agradece!</p>
                 </div>
 
-                <div class="space-y-4" id="giftList">
-                    <label class="glass-card p-6 flex justify-between items-center cursor-pointer active:bg-white/10 transition">
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg italic">Voucher Sephora</span>
-                            <span class="text-[10px] opacity-50 uppercase tracking-tighter">Categoria: Beleza & Estilo</span>
-                        </div>
-                        <input type="checkbox" value="Voucher Sephora">
+                <div class="space-y-3" id="giftList">
+                    <label class="flex items-center justify-between p-5 sticker-card border-white/10 cursor-pointer hover:bg-white/5">
+                        <span class="font-bold text-sm tracking-tight">Voucher Sephora</span>
+                        <input type="checkbox" value="Sephora">
                     </label>
-
-                    <label class="glass-card p-6 flex justify-between items-center cursor-pointer active:bg-white/10 transition">
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg italic">Kit Influencer 10</span>
-                            <span class="text-[10px] opacity-50 uppercase tracking-tighter">Categoria: Produção</span>
-                        </div>
-                        <input type="checkbox" value="Kit Influencer">
+                    <label class="flex items-center justify-between p-5 sticker-card border-white/10 cursor-pointer hover:bg-white/5">
+                        <span class="font-bold text-sm tracking-tight">Kit Blogueira Camisa 10</span>
+                        <input type="checkbox" value="Kit Blogueira">
                     </label>
-
-                    <label class="glass-card p-6 flex justify-between items-center cursor-pointer border-blue-500/30 bg-blue-500/5">
-                        <div class="flex flex-col">
-                            <span class="font-bold text-lg italic text-blue-400">QUALQUER VALOR (PIX)</span>
-                            <span class="text-[10px] opacity-50 uppercase tracking-tighter">Apoio Direto ao Elenco</span>
-                        </div>
-                        <input type="checkbox" value="Transferência PIX">
+                    <label class="flex items-center justify-between p-5 sticker-card border-blue-400/30 bg-blue-500/10">
+                        <span class="font-bold text-sm tracking-tight text-blue-300 italic">Transferência via PIX</span>
+                        <input type="checkbox" value="PIX">
                     </label>
                 </div>
 
-                <div class="glass-card p-8 border-yellow-400/20 text-center space-y-4">
-                    <div class="text-[9px] font-black text-yellow-400 tracking-[0.5em] uppercase">CHAVE PIX OFICIAL</div>
-                    <div class="bg-black/40 p-4 rounded-xl font-mono text-xs border border-white/5 break-all select-all">
-                        CHAVE
-                    </div>
-                    <p class="text-[10px] opacity-40">Toque acima para copiar a chave</p>
+                <div class="text-center p-6 sticker-card border-dashed">
+                    <p class="text-[9px] font-bold text-yellow-400 uppercase tracking-widest mb-2">Chave PIX da Aniversariante</p>
+                    <code class="block bg-black/40 p-3 rounded-lg text-[10px] font-mono border border-white/5 mb-2 select-all">pixdagabi@influencer.com</code>
+                    <p class="text-[8px] opacity-40">Toque para copiar a chave</p>
                 </div>
 
-                <button onclick="finalizarConfirmacao()" class="w-full btn-main py-6 rounded-3xl font-sport text-xl tracking-widest shadow-[0_20px_50px_rgba(255,215,0,0.3)]">
-                    FINALIZAR ESCALAÇÃO 📱
-                </button>
+                <button onclick="finalizarConfirmacao()" class="w-full bg-yellow-400 text-blue-900 font-bold py-6 rounded-[2rem] font-sport text-xl shadow-2xl">FINALIZAR 📱</button>
             </div>
         </section>
 
-        <footer class="mt-auto px-6 text-center">
-            <div class="line-detail"></div>
-            <div class="flex flex-col items-center space-y-1">
-                <span class="text-[9px] font-bold text-white/30 uppercase tracking-[0.4em]">Engineered by</span>
-                <span class="text-lg font-sport text-yellow-400/80 tracking-widest">RENATO BRILHANTE</span>
-            </div>
+        <footer class="mt-auto px-6 text-center space-y-1">
+            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full mb-8"></div>
+            <p class="text-[8px] font-bold text-white/20 uppercase tracking-[5px]">Developed by</p>
+            <p class="text-xl font-sport text-yellow-400 tracking-[3px] opacity-80">RENATO BRILHANTE</p>
         </footer>
-
     </div>
 
     <script>
-        // CONFIGURAÇÕES TÉCNICAS
         const WHATSAPP_NUMERO = "5511999999999"; 
         const DATA_EVENTO = new Date('June 2, 2026 16:00:00').getTime();
 
-        // MOTOR DO CRONÔMETRO
         function updateTimer() {
             const agora = new Date().getTime();
-            const distancia = DATA_EVENTO - agora;
+            const d = DATA_EVENTO - agora;
+            if (d < 0) return document.getElementById('mini-timer').innerHTML = "O JOGO COMEÇOU!";
             
-            if (distancia < 0) {
-                document.getElementById('home').querySelector('.glass-card').innerHTML = "O JOGO ESTÁ ROLANDO! 🏟️";
-                return;
-            }
-
-            const d = Math.floor(distancia / (1000 * 60 * 60 * 24));
-            const h = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-
-            document.getElementById('days').innerText = d.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
-            document.getElementById('mins').innerText = m.toString().padStart(2, '0');
+            document.getElementById('days').innerText = String(Math.floor(d / (1000*60*60*24))).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((d % (1000*60*60*24)) / (1000*60*60))).padStart(2, '0');
+            document.getElementById('mins').innerText = String(Math.floor((d % (1000*60*60)) / (1000*60))).padStart(2, '0');
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // NAVEGAÇÃO ENTRE PÁGINAS
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(id);
-            target.classList.add('active');
+            document.getElementById(id).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // FLUXO RSVP
         function goToGifts() {
-            const nome = document.getElementById('guestName').value.trim();
-            if(!nome) {
-                hapticFeedback(10);
-                alert('O treinador precisa do seu nome para a lista oficial!');
+            const input = document.getElementById('guestName');
+            const error = document.getElementById('errorMsg');
+            
+            if(!input.value.trim()) {
+                input.classList.add('input-error');
+                error.classList.remove('hidden');
+                setTimeout(() => input.classList.remove('input-error'), 400);
                 return;
             }
+            error.classList.add('hidden');
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
         }
@@ -303,32 +245,17 @@
             const selecionados = [];
             document.querySelectorAll('#giftList input:checked').forEach(i => selecionados.push(i.value));
             
-            const mimosTxt = selecionados.length > 0 ? selecionados.join(", ") : "Presença confirmada (Sem mimos)";
+            const mimosTxt = selecionados.length > 0 ? selecionados.join(", ") : "Presença confirmada!";
+            const textoWhats = `*GABI CUP 2026* 🏆\n\n⚽ *CRAQUE:* ${nome}\n🎁 *MIMO:* ${mimosTxt}`;
             
-            const textoWhats = `*CONVOCAÇÃO CONFIRMADA* 🏆\n\n⚽ *CRAQUE:* ${nome}\n🎁 *MIMO:* ${mimosTxt}\n\n_Enviado via Gabi Cup Invitation_`;
-            
-            // Disparar WhatsApp
             window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWhats)}`, '_blank');
-
-            // Efeito Visual Sucesso
             document.getElementById('successModal').classList.remove('hidden');
-            confetti({
-                particleCount: 250,
-                spread: 100,
-                origin: { y: 0.6 },
-                colors: ['#FFD700', '#FFFFFF', '#0038A8', '#009b3a'],
-                ticks: 300
-            });
+            confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#FFD700', '#FFFFFF', '#0038A8'] });
         }
 
         function closeModal() {
             document.getElementById('successModal').classList.add('hidden');
             showPage('home');
-        }
-
-        // Função de vibração simples (haptic) para mobile
-        function hapticFeedback(ms) {
-            if (window.navigator.vibrate) window.navigator.vibrate(ms);
         }
     </script>
 </body>
