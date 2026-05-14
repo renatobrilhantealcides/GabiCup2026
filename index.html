@@ -11,7 +11,7 @@
         :root {
             --primary-gold: #FFD700;
             --deep-blue: #001233;
-            --glass: rgba(255, 255, 255, 0.05);
+            --spotify-green: #1DB954;
             --gold-gradient: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
         }
 
@@ -65,7 +65,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Brilho Holográfico que corre pela figurinha */
         .holo-overlay {
             position: absolute;
             top: -150%; left: -150%;
@@ -91,7 +90,6 @@
             50% { transform: translateY(-10px) rotate(1deg); }
         }
 
-        /* Efeito de Luz Dourada Giratória ao fundo */
         .gold-aura {
             position: absolute;
             width: 150%; height: 150%;
@@ -107,7 +105,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Páginas e Transições */
         .page { display: none; }
         .page.active { display: block; animation: pageIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 
@@ -116,7 +113,6 @@
             to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
-        /* Validação Customizada Input */
         .input-box {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
@@ -124,21 +120,31 @@
         }
         .input-box:focus { border-color: var(--primary-gold); background: rgba(255,255,255,0.08); }
         
-        .error-shake { 
-            animation: shake 0.4s; 
-            border-bottom: 2px solid #ff4444 !important;
-        }
+        .error-shake { animation: shake 0.4s; border-bottom: 2px solid #ff4444 !important; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-8px); }
             75% { transform: translateX(8px); }
         }
 
-        /* Insta Card Style */
         .insta-card {
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             box-shadow: 0 10px 20px rgba(220, 39, 67, 0.2);
         }
+
+        /* Botão Spotify Premium Style */
+        .spotify-card {
+            background: linear-gradient(135deg, #1db954 0%, #121212 100%);
+            box-shadow: 0 10px 30px rgba(29, 185, 84, 0.2);
+            border: 1px solid rgba(29, 185, 84, 0.3);
+        }
+
+        /* Equalizador Animado */
+        .equalizer { display: flex; align-items: flex-end; gap: 2px; height: 16px; }
+        .bar { background: var(--primary-gold); width: 3px; border-radius: 1px; animation: eq 0.8s ease-in-out infinite alternate; }
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes eq { 0% { height: 2px; } 100% { height: 100%; } }
 
         .btn-main {
             background: var(--gold-gradient);
@@ -150,10 +156,7 @@
         }
         .btn-main:active { transform: scale(0.95); }
 
-        /* Animação para induzir o clique no mapa */
-        .pulse-map {
-            animation: pulse-border 2s infinite;
-        }
+        .pulse-map { animation: pulse-border 2s infinite; }
         @keyframes pulse-border {
             0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
@@ -195,15 +198,9 @@
                 <div class="sticker-card">
                     <div class="holo-overlay"></div>
                     <img src="https://i.imgur.com/4DwHOAB.jpeg" class="w-full h-auto">
-                    
-                    <div class="absolute top-4 left-4 bg-yellow-400 text-blue-900 font-sport text-3xl w-14 h-14 flex items-center justify-center rounded-2xl shadow-2xl border-4 border-white/20">
-                        10
-                    </div>
-
+                    <div class="absolute top-4 left-4 bg-yellow-400 text-blue-900 font-sport text-3xl w-14 h-14 flex items-center justify-center rounded-2xl shadow-2xl border-4 border-white/20">10</div>
                     <div class="absolute bottom-4 left-0 right-0 text-center">
-                        <div class="inline-block bg-yellow-400 text-blue-900 px-6 py-1 rounded-full text-[10px] font-black tracking-[0.2em] shadow-xl">
-                            FIGURINHA LENDÁRIA
-                        </div>
+                        <div class="inline-block bg-yellow-400 text-blue-900 px-6 py-1 rounded-full text-[10px] font-black tracking-[0.2em] shadow-xl">FIGURINHA LENDÁRIA</div>
                     </div>
                 </div>
             </div>
@@ -211,16 +208,35 @@
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-white/5 border border-white/10 p-5 rounded-3xl text-center">
                     <p class="text-[9px] text-yellow-400 font-bold uppercase tracking-widest mb-1">Apito Inicial</p>
-                    <p class="text-md font-bold">02 JUN • 16h</p>
+                    <p class="text-md font-bold">06 JUN • 15h</p>
                 </div>
-                <a href="https://maps.app.goo.gl/P2nJ9K3S3LqHj9uA9" target="_blank" class="bg-white/5 border border-yellow-400/30 p-5 rounded-3xl text-center hover:bg-white/10 transition pulse-map flex flex-col justify-center items-center">
+                <a href="https://www.google.com/maps" target="_blank" class="bg-white/5 border border-yellow-400/30 p-5 rounded-3xl text-center hover:bg-white/10 transition pulse-map flex flex-col justify-center items-center">
                     <p class="text-[9px] text-yellow-400 font-bold uppercase tracking-widest mb-1">Estádio</p>
-                    <p class="text-xs font-bold text-white mb-1">LOCALIZAÇÃO</p>
-                    <span class="text-[8px] font-black bg-yellow-400 text-blue-900 px-2 py-0.5 rounded uppercase tracking-tighter animate-bounce">Clique aqui 📍</span>
+                    <p class="text-[10px] font-bold text-white mb-1 leading-tight">AGUARDANDO CONFIRMAÇÃO</p>
+                    <span class="text-[8px] font-black bg-yellow-400 text-blue-900 px-2 py-0.5 rounded uppercase tracking-tighter animate-bounce">Mapa aqui 📍</span>
                 </a>
             </div>
 
-            <div class="px-1">
+            <div class="space-y-4 px-1">
+                <a href="SUA_URL_DA_PLAYLIST_AQUI" target="_blank" class="flex items-center justify-between p-5 spotify-card rounded-[2rem] hover:scale-[1.02] transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center shadow-xl border border-white/10">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="#1DB954" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.508 17.302c-.218.358-.68.472-1.038.254-2.812-1.718-6.352-2.106-10.518-1.154-.412.096-.82-.164-.916-.576-.096-.412.164-.82.576-.916 4.568-1.045 8.47-.594 11.624 1.332.358.218.472.68.254 1.038zm1.468-3.258c-.274.444-.852.584-1.296.31-3.22-1.978-8.124-2.55-11.93-1.396-.5.152-1.028-.132-1.18-.632-.152-.5.132-1.028.632-1.18 4.356-1.322 9.782-.676 13.464 1.584.444.274.584.852.31 1.296zm.126-3.414C15.222 8.25 8.8 8.038 5.092 9.162c-.57.174-1.176-.15-1.35-.72-.174-.57.15-1.176.72-1.35 4.254-1.29 11.352-1.038 15.822 1.614.516.306.684.978.378 1.494-.306.516-.978.684-1.494.378z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-green-400 uppercase tracking-widest">SetList Exclusivo</p>
+                            <p class="text-[11px] font-medium text-white/70 leading-tight">Contribua com a vibe da nossa área VIP</p>
+                        </div>
+                    </div>
+                    <div class="equalizer pr-2">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </a>
+
                 <a href="https://instagram.com/gabrieledionizzio" target="_blank" class="flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-white/10 transition group">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 insta-card rounded-2xl flex items-center justify-center text-2xl shadow-xl transform group-hover:rotate-6 transition">📸</div>
@@ -240,13 +256,11 @@
 
         <section id="rsvp" class="page px-6 pt-12">
             <button onclick="showPage('home')" class="text-[10px] font-bold opacity-30 mb-12 tracking-[3px]">← VOLTAR AO INÍCIO</button>
-            
             <div id="step-1" class="space-y-8">
-                <div class="space-y-1">
+                <div class="space-y-1 text-center">
                     <h2 class="text-5xl font-sport text-yellow-400 leading-none">IDENTIFICAÇÃO</h2>
                     <p class="text-xs opacity-50 italic">Insira seu nome para a lista oficial da FIFA.</p>
                 </div>
-
                 <div class="space-y-4">
                     <div class="relative">
                         <input type="text" id="guestName" class="input-box w-full p-6 rounded-2xl text-xl focus:outline-none placeholder-white/5" placeholder="Nome Completo">
@@ -257,11 +271,10 @@
             </div>
 
             <div id="step-2" class="hidden space-y-10">
-                <div class="space-y-1">
+                <div class="space-y-1 text-center">
                     <h2 class="text-5xl font-sport text-yellow-400">PRESENTES</h2>
                     <p class="text-[10px] opacity-60 uppercase tracking-widest">Contribua com o elenco (opcional):</p>
                 </div>
-
                 <div class="space-y-3" id="giftList">
                     <label class="flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-2xl cursor-pointer hover:bg-white/10 transition">
                         <span class="font-bold">Voucher Sephora</span>
@@ -276,13 +289,11 @@
                         <input type="checkbox" value="PIX" class="w-6 h-6 accent-blue-400">
                     </label>
                 </div>
-
                 <div class="text-center p-6 bg-black/40 rounded-3xl border border-dashed border-white/20">
                     <p class="text-[9px] font-bold text-yellow-400 uppercase tracking-widest mb-2">Chave PIX</p>
                     <code class="block text-xs font-mono mb-2 select-all">pixdagabi@influencer.com</code>
                     <p class="text-[8px] opacity-30">Toque para copiar a chave</p>
                 </div>
-
                 <button onclick="finalizarConfirmacao()" class="w-full btn-main py-6 rounded-[2.2rem] font-sport text-2xl tracking-widest">FINALIZAR 📱</button>
             </div>
         </section>
@@ -298,14 +309,12 @@
 
     <script>
         const WHATSAPP_NUMERO = "5511999999999"; 
-        const DATA_EVENTO = new Date('June 2, 2026 16:00:00').getTime();
+        const DATA_EVENTO = new Date('June 6, 2026 15:00:00').getTime();
 
-        // Timer
         function updateTimer() {
             const agora = new Date().getTime();
             const d = DATA_EVENTO - agora;
             if (d < 0) return;
-            
             document.getElementById('days').innerText = String(Math.floor(d / (1000*60*60*24))).padStart(2, '0');
             document.getElementById('hours').innerText = String(Math.floor((d % (1000*60*60*24)) / (1000*60*60))).padStart(2, '0');
             document.getElementById('mins').innerText = String(Math.floor((d % (1000*60*60)) / (1000*60))).padStart(2, '0');
@@ -313,18 +322,15 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Navegação
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Validação de Nome
         function goToGifts() {
             const input = document.getElementById('guestName');
             const error = document.getElementById('errorMsg');
-            
             if(!input.value.trim()) {
                 input.classList.add('error-shake');
                 error.classList.remove('hidden');
@@ -340,20 +346,11 @@
             const nome = document.getElementById('guestName').value;
             const selecionados = [];
             document.querySelectorAll('#giftList input:checked').forEach(i => selecionados.push(i.value));
-            
             const mimosTxt = selecionados.length > 0 ? selecionados.join(", ") : "Confirmado!";
             const textoWhats = `*GABI CUP 2026* 🏆\n\n⚽ *CRAQUE:* ${nome}\n🎁 *MIMO:* ${mimosTxt}`;
-            
             window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWhats)}`, '_blank');
             document.getElementById('successModal').classList.remove('hidden');
-            
-            // Efeito Confete de Campeão
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#FFD700', '#FFFFFF', '#0038A8', '#009b3a']
-            });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#FFD700', '#FFFFFF', '#0038A8', '#009b3a'] });
         }
 
         function closeModal() {
