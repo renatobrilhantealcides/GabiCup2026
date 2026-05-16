@@ -161,8 +161,8 @@
 
     <div class="animated-bg"></div>
 
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/snap.mp3" type="audio/mp3" id="audioSource">
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+        <source src="https://archive.org/download/mc-guime-pais-do-futebol/mc-guime-pais-do-futebol.mp3" type="audio/mp3">
     </audio>
 
     <div class="audio-player-floating text-white animate-fade-in" id="audioPlayerContainer" onclick="toggleAudio()">
@@ -237,7 +237,7 @@
                     <p class="text-[8px] text-yellow-400 font-black uppercase tracking-widest mb-1">Abertura dos Portões</p>
                     <p class="text-md font-bold text-white/95">06 JUN • 15h</p>
                 </div>
-                <a href="https://maps.app.goo.gl/exemplo" target="_blank" class="bg-black/30 border border-yellow-400/40 p-5 rounded-[2rem] text-center hover:bg-emerald-800/40 transition-all flex flex-col justify-center items-center backdrop-blur-md shadow-lg group">
+                <a href="http://maps.google.com/?q=S%C3%A3o+Paulo" target="_blank" class="bg-black/30 border border-yellow-400/40 p-5 rounded-[2rem] text-center hover:bg-emerald-800/40 transition-all flex flex-col justify-center items-center backdrop-blur-md shadow-lg group">
                     <p class="text-[8px] text-yellow-400 font-black uppercase tracking-widest mb-1">Localização</p>
                     <p class="text-[10px] font-bold text-white mb-1 uppercase tracking-tighter">Ver no Mapa</p>
                     <span class="text-[8px] font-black bg-yellow-400 text-black px-2 py-0.5 rounded uppercase transform group-hover:scale-105 transition-all">Clique Aqui 📍</span>
@@ -373,60 +373,64 @@
     <script>
         const WHATSAPP_NUMERO = "5511999999999"; 
         const DATA_EVENTO = new Date('June 6, 2026 15:00:00').getTime();
-        
-        // Link alternativo de alta velocidade e compatibilidade total (Cloudflare CDN)
-        const MUSICA_URL = "https://pub-2f741a87db7643e18a0028e3b2e3c03a.r2.dev/pais_do_futebol_refrao.mp3";
 
         let localStream = null;
         let fotoCapturadaDataUrl = null;
-        let audioIniciado = false;
+        let isPlaying = false;
 
         const myAudio = document.getElementById('bgMusic');
         const containerAudio = document.getElementById('audioPlayerContainer');
         const btnControl = document.getElementById('btnAudioControl');
+        const eqIcon = document.getElementById('eqIcon');
+        let audioDesbloqueado = false;
 
-        // Injeta a URL correta diretamente
-        document.getElementById('audioSource').src = MUSICA_URL;
-        myAudio.load();
-
-        // Tenta tocar em qualquer clique na tela de forma silenciosa e limpa
-        function ativarAudioGeral() {
-            if (!audioIniciado) {
+        // SISTEMA DE DESBLOQUEIO AUTO NOS CELULARES (PERMISSÃO INVISÍVEL NO PRIMEIRO TOQUE)
+        function desbloquearAudioGlobal() {
+            if (!audioDesbloqueado) {
+                // Configura para começar próximo do refrão (~53 segundos)
+                myAudio.currentTime = 53;
                 myAudio.play().then(() => {
-                    audioIniciado = true;
-                    containerAudio.classList.add('playing');
+                    audioDesbloqueado = true;
+                    isPlaying = true;
+                    eqIcon.classList.add('playing');
                     btnControl.innerText = "║";
-                }).catch(e => console.log("Aguardando clique direto no botão do player."));
+                }).catch(err => {
+                    console.log("Aguardando interação direta no player.");
+                });
             }
         }
+        document.addEventListener('click', desbloquearAudioGlobal, { once: true });
+        document.addEventListener('touchstart', desbloquearAudioGlobal, { once: true });
 
-        document.addEventListener('click', ativarAudioGeral);
-        document.addEventListener('touchstart', ativarAudioGeral);
-
-        // FUNÇÃO DO PLAYER DO TOPO (TOTALMENTE LIMPA E DIRETA)
+        // CONTROLE DIRETO DO PLAYER FLUTUANTE
         function toggleAudio() {
             if (myAudio.paused) {
+                if(myAudio.currentTime === 0 || myAudio.currentTime < 10) {
+                    myAudio.currentTime = 53; // Garante o refrão se for o primeiro play manual
+                }
                 myAudio.play().then(() => {
-                    containerAudio.classList.add('playing');
+                    eqIcon.classList.add('playing');
                     btnControl.innerText = "║";
-                    audioIniciado = true;
-                }).catch(err => {
-                    // Fallback definitivo caso o iOS bloqueie a inicialização assíncrona
+                    isPlaying = true;
+                    audioDesbloqueado = true;
+                }).catch(() => {
                     myAudio.play();
-                    containerAudio.classList.add('playing');
+                    eqIcon.classList.add('playing');
                     btnControl.innerText = "║";
-                    audioIniciado = true;
+                    isPlaying = true;
+                    audioDesbloqueado = true;
                 });
             } else {
                 myAudio.pause();
-                containerAudio.classList.remove('playing');
+                eqIcon.classList.remove('playing');
                 btnControl.innerText = "▶";
+                isPlaying = false;
             }
         }
 
         function updateTimer() {
-            const agora = new Date().getTime();
-            const d = DATA_EVENTO - agora;
+            const ago = new Date().getTime();
+            const d = DATA_EVENTO - ago;
             if (d < 0) return;
             document.getElementById('days').innerText = String(Math.floor(d / (1000*60*60*24))).padStart(2, '0');
             document.getElementById('hours').innerText = String(Math.floor((d % (1000*60*60*24)) / (1000*60*60))).padStart(2, '0');
@@ -460,7 +464,7 @@
                 });
                 document.getElementById('videoFeed').srcObject = localStream;
             } catch (err) {
-                console.log("Câmera desativada.");
+                console.log("Câmera indisponível no dispositivo.");
             }
         }
 
