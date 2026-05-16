@@ -157,7 +157,7 @@
         <section id="home" class="page active px-6 pt-10 space-y-8">
             
             <header class="text-center space-y-2">
-                <p class="text-yellow-400 font-extrabold tracking-[0.5em] text-[8px] uppercase opacity-90"></p>
+                <p class="text-yellow-400 font-extrabold tracking-[0.5em] text-[8px] uppercase opacity-90">World Elite Edition | 2026</p>
                 <h1 class="text-7xl font-sport leading-none premium-title">27 DA GAB'S</h1>
                 <div class="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-2 rounded-full backdrop-blur-xl">
                     <span class="w-2 h-2 bg-yellow-400 rounded-full animate-ping"></span>
@@ -188,7 +188,7 @@
             </div>
 
             <div class="space-y-4 px-1">
-                <a href="www.spotify.com/playlist/6luw5JTHxtmVpear8Ejzzf?pi=iHigsEk8TDu2u&pt=de8bbe59cf4feb2b3dfcabd7bdeeccec" target="_blank" class="flex items-center justify-between p-5 spotify-card rounded-[2.2rem] hover:scale-[1.02] active:scale-95 transition-all">
+                <a id="spotifyLink" href="#" target="_blank" class="flex items-center justify-between p-5 spotify-card rounded-[2.2rem] hover:scale-[1.02] active:scale-95 transition-all">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center shadow-2xl border border-white/10">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="#1DB954" xmlns="http://www.w3.org/2000/svg">
@@ -296,8 +296,15 @@
     </div>
 
     <script>
+        // ==========================================
+        // CONFIGURAÇÕES DO CONVITE (ALTERE AQUI)
+        // ==========================================
+        const SPOTIFY_PLAYLIST_URL = "https://open.spotify.com/playlist/6luw5JTHxtmVpear8Ejzzf?si=hffaIjXCTmmZq62h74RqGQ&pi=iHigsEk8TDu2u&pt=de8bbe59cf4feb2b3dfcabd7bdeeccec"; 
         const WHATSAPP_NUMERO = "5511999999999"; 
         const DATA_EVENTO = new Date('June 6, 2026 15:00:00').getTime();
+
+        // Aplica dinamicamente a URL correta no elemento para evitar erros de navegação
+        document.getElementById('spotifyLink').href = SPOTIFY_PLAYLIST_URL;
 
         function updateTimer() {
             const agora = new Date().getTime();
@@ -356,4 +363,4 @@
         }
     </script>
 </body>
-</html>        
+</html>
