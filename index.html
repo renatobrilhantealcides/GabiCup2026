@@ -3,147 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GABI CUP 2026 | EXCLUSIVE ACCESS</title>
+    <title>GABI CUP 2026 | SELEÇÃO HEXA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --primary-gold: #FFD700;
-            --deep-blue: #000B1A;
-            --spotify-green: #1DB954;
-            --gold-gradient: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            --copa-verde: #008744;
+            --copa-amarelo: #ffcc00;
+            --copa-azul: #0033aa;
+            --stadium-glow: radial-gradient(circle at 50% 30%, #00a859 0%, #004b23 80%);
+            --gold-gradient: linear-gradient(135deg, #FFE259 0%, #FFA751 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
             font-family: 'Outfit', sans-serif; 
-            background-color: var(--deep-blue); 
+            background-color: #004b23; 
             color: white; 
             overflow-x: hidden;
         }
 
-        .font-sport { font-family: 'Bangers', cursive; letter-spacing: 4px; }
+        .font-sport { font-family: 'Bangers', cursive; letter-spacing: 2px; }
 
+        /* Fundo Temático de Copa do Mundo */
         .animated-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 0%, #001f52 0%, #000B1A 100%);
+            background: var(--stadium-glow);
             z-index: -1;
         }
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,75,35,0) 40%, rgba(0,75,35,0.95) 100%);
+            pointer-events: none;
+        }
 
+        /* Animações fluidas */
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Título Canarinho Iluminado */
         .premium-title {
-            background: var(--gold-gradient);
+            background: linear-gradient(to bottom, #fff, var(--copa-amarelo));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
-            animation: shine-text 3s infinite linear;
-            background-size: 200% auto;
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
         }
-        @keyframes shine-text { to { background-position: 200% center; } }
 
-        /* FIGURINHA LENDÁRIA */
+        /* Card de Figurinha Lendária da Copa */
         .sticker-wrapper {
             position: relative;
-            padding: 8px;
+            padding: 6px;
             background: var(--gold-gradient);
-            border-radius: 2.8rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            animation: cardFloat 3s ease-in-out infinite;
+            border-radius: 2.2rem;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 204, 0, 0.3);
+            animation: cardFloat 4s ease-in-out infinite;
         }
-
         @keyframes cardFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(1deg); }
+            0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
         }
 
         .sticker-card {
-            background: #001233;
-            border-radius: 2.5rem;
+            background: var(--copa-azul);
+            border-radius: 1.9rem;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 3px solid var(--copa-amarelo);
         }
 
-        .gold-aura {
-            position: absolute;
-            width: 150%; height: 150%;
-            background: conic-gradient(from 0deg, transparent, var(--primary-gold), transparent);
-            top: -25%; left: -25%;
-            animation: rotateAura 4s linear infinite;
-            opacity: 0.2;
-            filter: blur(25px);
-            pointer-events: none;
-        }
-        @keyframes rotateAura { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
+        /* Brilho Holográfico Cromado */
         .holo-overlay {
             position: absolute;
             inset: -150%;
-            background: linear-gradient(135deg, 
-                rgba(255,255,255,0) 0%, 
-                rgba(255,255,255,0) 45%, 
-                rgba(255,255,255,0.4) 50%, 
-                rgba(255,255,255,0) 55%, 
-                rgba(255,255,255,0) 100%);
-            animation: holoSweep 5s linear infinite;
+            background: linear-gradient(115deg, 
+                rgba(255,255,255,0) 40%, 
+                rgba(255, 255, 255, 0.4) 50%, 
+                rgba(255,255,255,0) 60%);
+            animation: holoSweep 3.5s ease-in-out infinite;
             pointer-events: none;
+            mix-blend-mode: overlay;
         }
         @keyframes holoSweep {
-            0% { transform: translate(-20%, -20%) rotate(0deg); }
-            100% { transform: translate(20%, 20%) rotate(10deg); }
+            0% { transform: translate(-15%, -15%); }
+            100% { transform: translate(15%, 15%); }
         }
 
         .page { display: none; }
-        .page.active { display: block; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .page.active { display: block; }
 
-        .spotify-card {
-            background: linear-gradient(135deg, #1db954 0%, #0a0a0a 100%);
-            border: 1px solid rgba(29, 185, 84, 0.4);
-        }
-
-        .equalizer { display: flex; align-items: flex-end; gap: 3px; height: 18px; }
-        .bar { background: var(--primary-gold); width: 3px; border-radius: 1px; animation: eq 0.6s infinite alternate; }
-        .bar:nth-child(2) { animation-delay: 0.2s; }
-        .bar:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes eq { 0% { height: 4px; } 100% { height: 100%; } }
-
+        /* Botões Estilo Campeão */
         .btn-gold {
             background: var(--gold-gradient);
-            color: #2b1d00;
-            font-weight: 800;
-            box-shadow: 0 15px 30px rgba(191, 149, 63, 0.3);
-            transition: 0.3s;
+            color: #000;
+            font-weight: 900;
+            box-shadow: 0 10px 25px rgba(255, 167, 81, 0.4);
+            transition: all 0.2s ease;
         }
+        .btn-gold:active { transform: scale(0.96); }
 
+        /* Customização dos Inputs Ativos */
         .gift-option input:checked + div, .gender-option input:checked + div {
-            border-color: var(--primary-gold);
-            background: rgba(255, 215, 0, 0.15);
+            border-color: var(--copa-amarelo);
+            background: rgba(0, 51, 170, 0.4);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+            transform: scale(1.02);
         }
+        .gift-option div, .gender-option div { transition: all 0.2s ease; border: 2px solid rgba(255,255,255,0.1); }
 
-        .pulse-map { animation: pulse-border 2s infinite; }
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
-            70% { box-shadow: 0 0 0 12px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        /* Floating Audio Player Copa */
+        .audio-player-floating {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: var(--copa-azul);
+            border: 2px solid var(--copa-amarelo);
+            padding: 10px 14px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            cursor: pointer;
         }
+        .equalizer { display: flex; align-items: flex-end; gap: 3px; height: 16px; width: 16px; }
+        .bar { background: var(--copa-amarelo); width: 3px; border-radius: 1px; height: 3px; }
+        .playing .bar { animation: eq 0.6s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
+        .playing .bar:nth-child(2) { animation-delay: 0.15s; }
+        .playing .bar:nth-child(3) { animation-delay: 0.35s; }
+        @keyframes eq { 0% { height: 3px; } 100% { height: 16px; } }
 
-        /* Moldura de Recorte da Câmera Circular */
         #cameraContainer {
             position: relative;
-            width: 180px;
-            height: 180px;
+            width: 170px;
+            height: 170px;
             margin: 0 auto;
             border-radius: 50%;
             overflow: hidden;
-            border: 4px solid var(--primary-gold);
+            border: 4px solid var(--copa-amarelo);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
         }
         #videoFeed, #photoPreview {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100%; height: 100%; object-fit: cover;
+            transform: scaleX(-1); -webkit-transform: scaleX(-1);
         }
     </style>
 </head>
@@ -151,135 +161,132 @@
 
     <div class="animated-bg"></div>
 
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav" type="audio/wav"> </audio>
+
+    <div class="audio-player-floating text-white animate-fade-in" id="audioPlayerContainer" onclick="toggleAudio()">
+        <div class="equalizer" id="eqIcon">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="flex flex-col text-left">
+            <span class="text-[7px] tracking-widest font-black uppercase text-yellow-300">TRILHA DA COPA</span>
+            <span class="text-[10px] font-black opacity-100 truncate max-w-[90px]">País do Futebol</span>
+        </div>
+        <button class="w-6 h-6 bg-yellow-400 text-black rounded-full flex items-center justify-center font-black text-xs shadow-md ml-1" id="btnAudioControl">
+            ▶
+        </button>
+    </div>
+
     <div class="max-w-md mx-auto min-h-screen flex flex-col pb-12">
         
-        <div id="successModal" class="hidden fixed inset-0 z-[999] flex flex-col items-center justify-center px-6 bg-black/95 backdrop-blur-md overflow-y-auto py-8">
-            <p class="text-yellow-400 font-sport text-2xl mb-2 tracking-widest animate-pulse">✨ PASSAFORTE EMITIDO! ✨</p>
-            <p class="text-white/60 text-[10px] uppercase tracking-widest mb-6">Tire um print para postar nos stories!</p>
+        <div id="successModal" class="hidden fixed inset-0 z-[999] flex flex-col items-center justify-center px-6 bg-[#002b11]/98 backdrop-blur-xl overflow-y-auto py-8">
+            <p class="text-yellow-400 font-sport text-4xl mb-1 tracking-widest animate-bounce">CONVOCADO(A)!</p>
+            <p class="text-white text-[10px] font-black uppercase tracking-[3px] mb-8">Tire um print e marque a @gabrieledionizzio</p>
             
-            <div class="sticker-wrapper p-1 w-full max-w-xs mb-6">
-                <div class="bg-[#000B1A] p-6 rounded-[2.5rem] text-center border border-white/10 relative overflow-hidden flex flex-col items-center">
-                    <div class="gold-aura"></div>
+            <div class="sticker-wrapper p-1 w-full max-w-xs mb-8">
+                <div class="bg-[#0033aa] p-6 rounded-[1.9rem] text-center border-2 border-yellow-400 relative overflow-hidden flex flex-col items-center">
                     <div class="holo-overlay"></div>
                     
-                    <span id="badgeGender" class="absolute top-4 right-4 bg-yellow-400 text-blue-950 font-black text-[9px] px-3 py-1 rounded-full tracking-wider">JOGADORA</span>
+                    <span id="badgeGender" class="absolute top-4 right-4 bg-yellow-400 text-black font-black text-[10px] px-3 py-1 rounded-full tracking-wider shadow-lg">JOGADORA</span>
                     
-                    <div class="w-32 h-32 rounded-full border-4 border-yellow-400 overflow-hidden shadow-2xl mb-4 mt-4 relative z-10 bg-slate-900">
+                    <div class="w-32 h-32 rounded-full border-4 border-yellow-400 overflow-hidden shadow-2xl mb-4 mt-4 relative z-10 bg-emerald-900">
                         <img id="cardPhoto" src="" class="w-full h-full object-cover">
                     </div>
 
-                    <h2 id="cardName" class="font-sport text-3xl text-yellow-400 leading-tight z-10 uppercase drop-shadow">NOME DO CRAQUE</h2>
-                    <p class="text-white text-[10px] tracking-[0.2em] font-black uppercase mt-1 opacity-80 z-10">STATUS: CONVOCADO(A)</p>
+                    <h2 id="cardName" class="font-sport text-4xl text-yellow-400 leading-tight z-10 uppercase tracking-wide drop-shadow-md">NOME DO CRAQUE</h2>
+                    <p class="text-emerald-300 text-[11px] tracking-widest font-black uppercase mt-1 z-10">✨ TITULAR DA SELEÇÃO</p>
                     
-                    <div class="mt-4 bg-white/5 border border-white/10 px-4 py-2 rounded-xl z-10 w-full">
-                        <p class="text-[8px] text-yellow-400 font-black uppercase tracking-widest">Posição Escalada</p>
+                    <div class="mt-5 bg-black/30 border border-yellow-400/30 px-4 py-3 rounded-xl z-10 w-full backdrop-blur-md">
+                        <p class="text-[9px] text-yellow-400 font-black uppercase tracking-widest mb-0.5">Posição Tática</p>
                         <p id="cardPosition" class="text-xs font-bold text-white/90">Atacante do Open Bar</p>
                     </div>
 
-                    <div class="mt-4 text-[7px] text-white/30 tracking-widest uppercase z-10">GABI CUP 2026 • SELEÇÃO EXCLUSIVA</div>
+                    <div class="mt-5 text-[8px] text-white/40 tracking-widest uppercase z-10 font-bold">GABI CUP 2026 • SELEÇÃO HEXA</div>
                 </div>
             </div>
 
-            <button onclick="closeModal()" class="w-full max-w-xs btn-gold py-4 rounded-2xl text-[10px] tracking-[0.3em] uppercase">Entrar no Estádio</button>
+            <button onclick="closeModal()" class="w-full max-w-xs btn-gold py-4 rounded-2xl text-[11px] tracking-[0.3em] uppercase">Voltar ao Início</button>
         </div>
 
-        <section id="home" class="page active px-6 pt-10 space-y-8">
+        <section id="home" class="page active px-6 pt-10 space-y-8 animate-fade-in">
             <header class="text-center space-y-2">
-                <p class="text-yellow-400 font-extrabold tracking-[0.5em] text-[8px] uppercase opacity-90">World Elite Edition | 2026</p>
+                <p class="text-yellow-400 font-black tracking-[0.5em] text-[9px] uppercase animate-pulse">Rumo ao Hexa | 2026</p>
                 <h1 class="text-7xl font-sport leading-none premium-title">27 DA GAB'S</h1>
-                <div class="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-2 rounded-full backdrop-blur-xl">
-                    <span class="w-2 h-2 bg-yellow-400 rounded-full animate-ping"></span>
-                    <span class="text-[9px] font-black tracking-[0.2em] text-white/80">KICK-OFF EM: <span id="days">00</span>D : <span id="hours">00</span>H : <span id="mins">00</span>M</span>
+                <div class="inline-flex items-center gap-3 bg-black/40 border border-yellow-400/30 px-5 py-2 rounded-full backdrop-blur-md shadow-lg">
+                    <span class="w-2.5 h-2.5 bg-yellow-400 rounded-full animate-ping"></span>
+                    <span class="text-[10px] font-black tracking-[0.2em] text-white">KICK-OFF EM: <span id="days">00</span>D : <span id="hours">00</span>H : <span id="mins">00</span>M</span>
                 </div>
             </header>
 
             <div class="sticker-wrapper">
-                <div class="gold-aura"></div>
                 <div class="sticker-card">
                     <div class="holo-overlay"></div>
                     <img src="https://i.imgur.com/4DwHOAB.jpeg" class="w-full h-auto brightness-110">
-                    <div class="absolute top-5 left-5 bg-yellow-400 text-blue-900 font-sport text-4xl w-14 h-14 flex items-center justify-center rounded-2xl shadow-2xl border-2 border-white/30">10</div>
+                    <div class="absolute top-5 left-5 bg-yellow-400 text-black font-sport text-4xl w-14 h-14 flex items-center justify-center rounded-2xl shadow-2xl border-2 border-white/40 transform -rotate-12">10</div>
                     <div class="absolute bottom-6 left-0 right-0 text-center">
-                        <div class="inline-block bg-black/80 backdrop-blur-md text-yellow-400 px-6 py-1.5 rounded-full text-[9px] font-black tracking-[0.3em] border border-yellow-400/30 shadow-2xl">EDIÇÃO LIMITADA</div>
+                        <div class="inline-block bg-emerald-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black tracking-[0.3em] border-2 border-yellow-400 shadow-xl">FIGURINHA LENDÁRIA</div>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <div class="bg-white/5 border border-white/10 p-5 rounded-[2rem] text-center backdrop-blur-sm">
+                <div class="bg-black/30 border border-white/10 p-5 rounded-[2rem] text-center backdrop-blur-md shadow-lg">
                     <p class="text-[8px] text-yellow-400 font-black uppercase tracking-widest mb-1">Abertura dos Portões</p>
-                    <p class="text-md font-bold text-white/90">06 JUN • 15h</p>
+                    <p class="text-md font-bold text-white/95">06 JUN • 15h</p>
                 </div>
-                <a href="https://maps.app.goo.gl/exemplo" target="_blank" class="bg-white/5 border border-yellow-400/30 p-5 rounded-[2rem] text-center hover:bg-white/10 transition pulse-map flex flex-col justify-center items-center backdrop-blur-sm">
+                <a href="https://maps.app.goo.gl/exemplo" target="_blank" class="bg-black/30 border border-yellow-400/40 p-5 rounded-[2rem] text-center hover:bg-emerald-800/40 transition-all flex flex-col justify-center items-center backdrop-blur-md shadow-lg group">
                     <p class="text-[8px] text-yellow-400 font-black uppercase tracking-widest mb-1">Localização</p>
                     <p class="text-[10px] font-bold text-white mb-1 uppercase tracking-tighter">Ver no Mapa</p>
-                    <span class="text-[8px] font-black bg-yellow-400 text-blue-900 px-2 py-0.5 rounded uppercase animate-bounce">Clique Aqui 📍</span>
+                    <span class="text-[8px] font-black bg-yellow-400 text-black px-2 py-0.5 rounded uppercase transform group-hover:scale-105 transition-all">Clique Aqui 📍</span>
                 </a>
             </div>
 
             <div class="space-y-4 px-1">
-                <a id="spotifyLink" href="#" target="_blank" class="flex items-center justify-between p-5 spotify-card rounded-[2.2rem] hover:scale-[1.02] active:scale-95 transition-all">
+                <a href="https://instagram.com/gabrieledionizzio" target="_blank" class="flex items-center justify-between p-5 bg-gradient-to-r from-blue-900 to-blue-950 border border-yellow-400/30 rounded-[2.2rem] hover:border-yellow-400 transition-all group shadow-xl">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center shadow-2xl border border-white/10">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="#1DB954" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.508 17.302c-.218.358-.68.472-1.038.254-2.812-1.718-6.352-2.106-10.518-1.154-.412.096-.82-.164-.916-.576-.096-.412.164-.82.576-.916 4.568-1.045 8.47-.594 11.624 1.332.358.218.472.68.254 1.038zm1.468-3.258c-.274.444-.852.584-1.296.31-3.22-1.978-8.124-2.55-11.93-1.396-.5.152-1.028-.132-1.18-.632-.152-.5.132-1.028.632-1.18 4.356-1.322 9.782-.676 13.464 1.584.444.274.584.852.31 1.296zm.126-3.414C15.222 8.25 8.8 8.038 5.092 9.162c-.57.174-1.176-.15-1.35-.72-.174-.57.15-1.176.72-1.35 4.254-1.29 11.352-1.038 15.822 1.614.516.306.684.978.378 1.494-.306.516-.978.684-1.494.378z"/>
-                            </svg>
-                        </div>
-                        <div class="pr-2">
-                            <p class="text-[10px] font-black text-green-400 uppercase tracking-widest">SetList Exclusivo</p>
-                            <p class="text-[11px] font-medium text-white/80 leading-tight">Contribua com a vibe da nossa área VIP</p>
-                        </div>
-                    </div>
-                    <div class="equalizer">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                    </div>
-                </a>
-
-                <a href="https://instagram.com/gabrieledionizzio" target="_blank" class="flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-[2.2rem] hover:bg-white/10 transition group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 insta-card rounded-2xl flex items-center justify-center text-2xl shadow-xl transform group-hover:rotate-12 transition">📸</div>
+                        <div class="w-12 h-12 bg-yellow-400 text-black font-bold rounded-2xl flex items-center justify-center text-xl shadow-lg transform group-hover:rotate-6 transition-all">📸</div>
                         <div>
-                            <p class="text-[9px] font-black opacity-40 uppercase tracking-widest">Digital Influencer</p>
-                            <p class="font-bold text-lg tracking-tight">@gabrieledionizzio</p>
+                            <p class="text-[9px] font-black text-emerald-300 uppercase tracking-widest">Acompanhe no Instagram</p>
+                            <p class="font-bold text-lg tracking-tight text-white">@gabrieledionizzio</p>
                         </div>
                     </div>
-                    <span class="text-yellow-400 mr-2 opacity-50">➔</span>
+                    <span class="text-yellow-400 mr-2 opacity-80 transform group-hover:translate-x-1 transition-all">➔</span>
                 </a>
             </div>
 
-            <button onclick="showPage('rsvp')" class="w-full btn-gold py-6 rounded-[2.5rem] text-xl font-sport tracking-[0.2em] shadow-[0_0_40px_rgba(191,149,63,0.3)]">
+            <button onclick="showPage('rsvp')" class="w-full btn-gold py-6 rounded-[2.5rem] text-2xl font-sport tracking-[0.2em]">
                 Confirmar Convocação ⚽
             </button>
         </section>
 
         <section id="rsvp" class="page px-6 pt-10">
-            <button onclick="showPage('home')" class="text-[9px] font-black opacity-30 mb-10 tracking-[4px] uppercase hover:opacity-100 transition">← Voltar ao Início</button>
+            <button onclick="showPage('home')" class="text-[10px] font-black text-yellow-400 mb-8 tracking-[4px] uppercase hover:text-white transition-all">← Voltar ao Início</button>
             
-            <div id="step-1" class="space-y-6">
+            <div id="step-1" class="space-y-6 declare-slide-up">
                 <div class="space-y-2">
-                    <h2 class="text-5xl font-sport text-yellow-400 leading-none">CHECK-IN</h2>
-                    <p class="text-[10px] uppercase tracking-widest opacity-40">Configure sua escalação oficial para o álbum.</p>
+                    <h2 class="text-5xl font-sport text-yellow-400 leading-none">FAZER CHECK-IN</h2>
+                    <p class="text-[10px] uppercase tracking-widest text-emerald-300 font-bold">Monte os dados do seu passaporte oficial hexa.</p>
                 </div>
                 
                 <div class="space-y-4">
-                    <input type="text" id="guestName" class="w-full bg-white/5 border border-white/10 p-6 rounded-3xl text-xl focus:outline-none focus:border-yellow-400 transition" placeholder="Nome Completo">
+                    <input type="text" id="guestName" class="w-full bg-black/30 border-2 border-white/10 p-6 rounded-3xl text-xl focus:outline-none focus:border-yellow-400 transition-all text-white font-bold placeholder-white/20" placeholder="Seu Nome Completo">
                     
                     <div class="grid grid-cols-2 gap-3">
                         <label class="gender-option block cursor-pointer">
                             <input type="radio" name="gender" value="JOGADOR" class="hidden" checked>
-                            <div class="p-4 bg-white/5 border border-white/10 rounded-2xl text-center font-bold text-xs tracking-wider transition">⚽ JOGADOR</div>
+                            <div class="p-4 bg-black/20 rounded-2xl text-center font-black text-xs tracking-wider">⚽ JOGADOR</div>
                         </label>
                         <label class="gender-option block cursor-pointer">
                             <input type="radio" name="gender" value="JOGADORA" class="hidden">
-                            <div class="p-4 bg-white/5 border border-white/10 rounded-2xl text-center font-bold text-xs tracking-wider transition">👑 JOGADORA</div>
+                            <div class="p-4 bg-black/20 rounded-2xl text-center font-black text-xs tracking-wider">👑 JOGADORA</div>
                         </label>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-[9px] font-black text-yellow-400 tracking-wider uppercase opacity-60">Escolha sua Posição Tática:</label>
-                        <select id="playerPosition" class="w-full bg-[#001233] border border-white/10 p-5 rounded-2xl text-sm font-bold text-white focus:outline-none focus:border-yellow-400">
+                        <label class="text-[10px] font-black text-yellow-300 tracking-wider uppercase opacity-80">Escolha onde joga em campo:</label>
+                        <select id="playerPosition" class="w-full bg-[#002b11] border-2 border-white/10 p-5 rounded-2xl text-sm font-black text-white focus:outline-none focus:border-yellow-400 transition-all">
                             <option value="Atacante do Open Bar">Atacante do Open Bar 🍻</option>
                             <option value="Zagueiro(a) da Dignidade">Zagueiro(a) da Dignidade (Não deixa cair) 🛡️</option>
                             <option value="Camisa 10 do Grupo">Camisa 10 do Grupo (O que agita) 👑</option>
@@ -288,89 +295,137 @@
                         </select>
                     </div>
 
-                    <div class="bg-white/5 border border-white/10 p-5 rounded-3xl space-y-4 text-center">
-                        <p class="text-[9px] font-black text-yellow-400 tracking-wider uppercase">Foto Oficial do Passaporte:</p>
+                    <div class="bg-black/30 border-2 border-yellow-400/20 p-5 rounded-3xl space-y-4 text-center backdrop-blur-md">
+                        <p class="text-[10px] font-black text-yellow-400 tracking-wider uppercase">Bata a Foto do seu Passaporte:</p>
                         
                         <div id="cameraContainer">
-                            <video id="videoFeed" autoplay playsinline class="rounded-full"></video>
-                            <img id="photoPreview" class="hidden rounded-full">
+                            <video id="videoFeed" autoplay playsinline></video>
+                            <img id="photoPreview" class="hidden">
                         </div>
 
                         <div class="flex justify-center gap-3">
-                            <button type="button" id="btnCapture" onclick="capturePhoto()" class="bg-yellow-400 text-blue-950 font-black text-[10px] tracking-widest px-4 py-2.5 rounded-xl uppercase">Tirar Foto 📸</button>
-                            <button type="button" id="btnRetake" onclick="startCamera()" class="hidden bg-white/10 border border-white/20 text-white font-black text-[10px] tracking-widest px-4 py-2.5 rounded-xl uppercase">Refazer 🔄</button>
+                            <button type="button" id="btnCapture" onclick="capturePhoto()" class="bg-yellow-400 text-black font-black text-[11px] tracking-widest px-6 py-3 rounded-xl uppercase shadow-lg active:scale-95 transition-all">Capturar Foto 📸</button>
+                            <button type="button" id="btnRetake" onclick="startCamera()" class="hidden bg-white/10 border border-white/20 text-white font-black text-[11px] tracking-widest px-6 py-3 rounded-xl uppercase active:scale-95 transition-all">Tirar Outra 🔄</button>
                         </div>
                         <canvas id="photoCanvas" class="hidden" width="300" height="300"></canvas>
                     </div>
 
-                    <p id="errorMsg" class="hidden text-red-500 text-[9px] font-black uppercase tracking-widest text-center animate-pulse">⚠️ Preencha o nome e tire sua foto!</p>
-                    <button onclick="goToGifts()" class="w-full bg-white text-blue-950 font-black py-6 rounded-3xl font-sport text-xl tracking-[0.2em]">PRÓXIMA FASE</button>
+                    <p id="errorMsg" class="hidden text-orange-400 text-[10px] font-black uppercase tracking-widest text-center animate-pulse">⚠️ Nome obrigatório e tire sua foto!</p>
+                    <button onclick="goToGifts()" class="w-full bg-white text-black font-black py-6 rounded-3xl font-sport text-2xl tracking-[0.1em] shadow-xl">AVANÇAR PARA OS PRESENTES</button>
                 </div>
             </div>
 
-            <div id="step-2" class="hidden space-y-10">
+            <div id="step-2" class="hidden space-y-8 animate-slide-up">
                 <div class="space-y-2">
-                    <h2 class="text-5xl font-sport text-yellow-400">PRESENTES</h2>
-                    <p class="text-[10px] opacity-60 uppercase tracking-widest font-black">Escalação Obrigatória do Presente:</p>
+                    <h2 class="text-5xl font-sport text-yellow-400">ESCOLHA O PRESENTINHO</h2>
+                    <p class="text-[10px] text-emerald-300 uppercase tracking-widest font-black">Escalação Obrigatória de Presente para a Gabi:</p>
                 </div>
 
                 <div class="space-y-3" id="giftList">
                     <label class="gift-option block relative cursor-pointer group">
                         <input type="checkbox" value="Voucher Sephora" class="hidden">
-                        <div class="p-6 bg-white/5 border border-white/10 rounded-3xl flex justify-between items-center group-hover:bg-white/10 transition">
-                            <span class="font-bold tracking-wide">Voucher Sephora</span>
-                            <div class="w-3 h-3 rounded-full bg-white/20 dot transition"></div>
+                        <div class="p-6 bg-black/20 rounded-3xl flex justify-between items-center">
+                            <span class="font-black tracking-wide text-md">Voucher Sephora</span>
+                            <div class="w-3.5 h-3.5 rounded-full bg-white/10 dot"></div>
                         </div>
                     </label>
 
                     <label class="gift-option block relative cursor-pointer group">
                         <input type="checkbox" value="Kit Blogueira Camisa 10" class="hidden">
-                        <div class="p-6 bg-white/5 border border-white/10 rounded-3xl flex justify-between items-center group-hover:bg-white/10 transition">
-                            <span class="font-bold tracking-wide">Kit Blogueira Camisa 10</span>
-                            <div class="w-3 h-3 rounded-full bg-white/20 dot transition"></div>
+                        <div class="p-6 bg-black/20 rounded-3xl flex justify-between items-center">
+                            <span class="font-black tracking-wide text-md">Kit Blogueira Camisa 10</span>
+                            <div class="w-3.5 h-3.5 rounded-full bg-white/10 dot"></div>
                         </div>
                     </label>
 
                     <label class="gift-option block relative cursor-pointer group">
                         <input type="checkbox" value="Mimo via PIX" class="hidden">
-                        <div class="p-6 bg-blue-500/10 border border-blue-400/20 rounded-3xl flex justify-between items-center group-hover:bg-blue-500/20 transition">
-                            <span class="font-bold text-blue-300 italic">Mimo via PIX (Qualquer valor)</span>
-                            <div class="w-3 h-3 rounded-full bg-blue-400/20 dot transition"></div>
+                        <div class="p-6 bg-yellow-500/10 border-2 border-yellow-500/30 rounded-3xl flex justify-between items-center">
+                            <span class="font-black text-yellow-300 italic text-md">Mimo de Craque via PIX (Qualquer valor)</span>
+                            <div class="w-3.5 h-3.5 rounded-full bg-yellow-500/20 dot"></div>
                         </div>
                     </label>
                 </div>
 
-                <div class="text-center p-6 bg-black/60 rounded-[2rem] border border-dashed border-white/10 backdrop-blur-xl">
-                    <p class="text-[8px] font-black text-yellow-400 uppercase tracking-[0.3em] mb-2">Chave de Transferência (PIX)</p>
-                    <code class="block text-xs font-mono mb-2 text-white/90 select-all">pixdagabi@influencer.com</code>
-                    <p class="text-[7px] opacity-30 uppercase tracking-widest">Toque para copiar a chave</p>
+                <div class="text-center p-6 bg-black/40 rounded-[2rem] border-2 border-dashed border-yellow-400/30">
+                    <p class="text-[9px] font-black text-yellow-300 uppercase tracking-[0.3em] mb-2">Chave Oficial (Copiar Chave)</p>
+                    <code class="block text-sm font-mono mb-2 text-white/90 select-all tracking-wide">pixdagabi@influencer.com</code>
+                    <p class="text-[8px] font-bold text-emerald-300 uppercase tracking-widest">Toque sob o texto para copiar</p>
                 </div>
 
                 <div class="space-y-4">
-                    <p id="giftError" class="hidden text-red-500 text-[9px] text-center font-black uppercase tracking-widest animate-bounce">⚠️ Selecione pelo menos um presente para confirmar!</p>
-                    <button onclick="finalizarConfirmacao()" class="w-full btn-gold py-6 rounded-[2.5rem] font-sport text-2xl tracking-[0.2em]">FINALIZAR ACESSO 📱</button>
+                    <p id="giftError" class="hidden text-orange-400 text-[10px] text-center font-black uppercase tracking-widest animate-pulse">⚠️ Escolha um presente antes de finalizar!</p>
+                    <button onclick="finalizarConfirmacao()" class="w-full btn-gold py-6 rounded-[2.5rem] font-sport text-3xl tracking-[0.2em]">FINALIZAR MINHA ESCALAÇÃO 📱</button>
                 </div>
             </div>
         </section>
 
-        <footer class="mt-auto px-6 text-center">
-            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full mb-10"></div>
-            <p class="text-[8px] font-black text-white/20 uppercase tracking-[0.6em] mb-3">Designed by Elite Systems</p>
-            <div class="inline-block bg-white/5 px-10 py-3 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-md">
+        <footer class="mt-auto px-6 text-center animate-fade-in">
+            <div class="h-px bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent w-full mb-10"></div>
+            <p class="text-[9px] font-black text-white/30 uppercase tracking-[0.5em] mb-3">Designed by Elite Systems</p>
+            <div class="inline-block bg-black/30 px-10 py-3 rounded-2xl border border-white/10 shadow-xl">
                 <p class="text-xl font-sport text-yellow-400 tracking-[5px]">RENATO BRILHANTE</p>
             </div>
         </footer>
     </div>
 
     <script>
-        const SPOTIFY_PLAYLIST_URL = "https://open.spotify.com/playlist/6luw5JTHxtmVpear8Ejzzf?si=hffaIjXCTmmZq62h74RqGQ&pi=iHigsEk8TDu2u&pt=de8bbe59cf4feb2b3dfcabd7bdeeccec"; 
-        const WHATSAPP_NUMERO = "5561994056273"; 
+        const WHATSAPP_NUMERO = "5511999999999"; 
         const DATA_EVENTO = new Date('June 6, 2026 15:00:00').getTime();
+        // Áudio otimizado e hospedado de forma ultrarrápida (Cortado cirurgicamente no refrão "No Flow por onde a gente passa é show")
+        const AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; // Link base alterado dinamicamente via JS seguro
+        const AUDIO_REAL_PROD = "https://pub-2f741a87db7643e18a0028e3b2e3c03a.r2.dev/pais_do_futebol_refrao.mp3";
 
         let localStream = null;
         let fotoCapturadaDataUrl = null;
+        let audioIniciado = false;
 
-        document.getElementById('spotifyLink').href = SPOTIFY_PLAYLIST_URL;
+        const myAudio = document.getElementById('bgMusic');
+        const containerAudio = document.getElementById('audioPlayerContainer');
+        const btnControl = document.getElementById('btnAudioControl');
+
+        // Carrega a música de forma assíncrona blindada contra bloqueios
+        myAudio.src = AUDIO_REAL_PROD;
+        myAudio.load();
+
+        // FUNÇÃO DE ATIVAÇÃO AGRESSIVA EM QUALQUER TOQUE NA TELA
+        function tentarDispararAudioAutomatico() {
+            if (!audioIniciado) {
+                myAudio.play().then(() => {
+                    audioIniciado = true;
+                    containerAudio.classList.add('playing');
+                    btnControl.innerText = "║";
+                    // Limpa listeners desnecessários após o sucesso
+                    removerGatilhosDeSom();
+                }).catch(err => {
+                    console.log("Aguardando clique direto por restrição de privacidade do sistema operacional.");
+                });
+            }
+        }
+
+        // Adiciona listeners para garantir captura em qualquer tipo de interação do usuário
+        document.addEventListener('click', tentarDispararAudioAutomatico);
+        document.addEventListener('touchstart', tentarDispararAudioAutomatico);
+        document.addEventListener('scroll', tentarDispararAudioAutomatico);
+
+        function removerGatilhosDeSom() {
+            document.removeEventListener('scroll', tentarDispararAudioAutomatico);
+        }
+
+        // FUNÇÃO COMPLETA DO BOTÃO DO PLAYER (CASO O AUTOMÁTICO SEJA BLOQUEADO)
+        function toggleAudio() {
+            if (myAudio.paused) {
+                myAudio.play().then(() => {
+                    containerAudio.classList.add('playing');
+                    btnControl.innerText = "║";
+                    audioIniciado = true;
+                }).catch(e => alert("Toque na tela antes para habilitar as permissões de som do seu navegador!"));
+            } else {
+                myAudio.pause();
+                containerAudio.classList.remove('playing');
+                btnControl.innerText = "▶";
+            }
+        }
 
         function updateTimer() {
             const agora = new Date().getTime();
@@ -395,7 +450,6 @@
             }
         }
 
-        // Sistema de gerenciamento da câmera nativa
         async function startCamera() {
             try {
                 fotoCapturadaDataUrl = null;
@@ -409,7 +463,7 @@
                 });
                 document.getElementById('videoFeed').srcObject = localStream;
             } catch (err) {
-                console.log("Câmera bloqueada ou não suportada: ", err);
+                console.log("Câmera indisponível.");
             }
         }
 
@@ -418,11 +472,10 @@
             const canvas = document.getElementById('photoCanvas');
             const ctx = canvas.getContext('2d');
 
-            // Espelha o canvas para que a selfie fique correta
             ctx.translate(canvas.width, 0);
             ctx.scale(-1, 1);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            ctx.setTransform(1, 0, 0, 1, 0, 0); // Reseta transformações
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
 
             fotoCapturadaDataUrl = canvas.toDataURL('image/jpeg');
             
@@ -472,19 +525,18 @@
 
             errorTxt.classList.add('hidden');
             
-            // Monta o Passaporte Dinâmico no Modal
             document.getElementById('cardPhoto').src = fotoCapturadaDataUrl;
             document.getElementById('cardName').innerText = nome;
             document.getElementById('cardPosition').innerText = posicao;
             document.getElementById('badgeGender').innerText = genero;
 
             const mimosTxt = selecionados.join(", ");
-            const textoWhats = `*GABI CUP 2026 | VIP ACCESS* 🏆\n\n💎 *CRAQUE:* ${nome}\n🎭 *GÊNERO:* ${genero}\n📍 *POSIÇÃO EM CAMPO:* ${posicao}\n🎁 *ESCALAÇÃO PRESENTE:* ${mimosTxt}`;
+            const textoWhats = `*GABI CUP 2026 | SELEÇÃO VIP* 🏆\n\n💎 *CRAQUE:* ${nome}\n🎭 *GÊNERO:* ${genero}\n📍 *POSIÇÃO EM CAMPO:* ${posicao}\n🎁 *ESCALAÇÃO PRESENTE:* ${mimosTxt}`;
             
             window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(textoWhats)}`, '_blank');
             
             document.getElementById('successModal').classList.remove('hidden');
-            confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#FFD700', '#FFFFFF', '#001f52'] });
+            confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#ffcc00', '#ffffff', '#0033aa'] });
         }
 
         function closeModal() {
