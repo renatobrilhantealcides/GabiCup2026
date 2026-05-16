@@ -161,8 +161,9 @@
 
     <div class="animated-bg"></div>
 
-    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
-        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav" type="audio/wav"> </audio>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/snap.mp3" type="audio/mp3" id="audioSource">
+    </audio>
 
     <div class="audio-player-floating text-white animate-fade-in" id="audioPlayerContainer" onclick="toggleAudio()">
         <div class="equalizer" id="eqIcon">
@@ -372,9 +373,9 @@
     <script>
         const WHATSAPP_NUMERO = "5511999999999"; 
         const DATA_EVENTO = new Date('June 6, 2026 15:00:00').getTime();
-        // Áudio otimizado e hospedado de forma ultrarrápida (Cortado cirurgicamente no refrão "No Flow por onde a gente passa é show")
-        const AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; // Link base alterado dinamicamente via JS seguro
-        const AUDIO_REAL_PROD = "https://pub-2f741a87db7643e18a0028e3b2e3c03a.r2.dev/pais_do_futebol_refrao.mp3";
+        
+        // Link alternativo de alta velocidade e compatibilidade total (Cloudflare CDN)
+        const MUSICA_URL = "https://pub-2f741a87db7643e18a0028e3b2e3c03a.r2.dev/pais_do_futebol_refrao.mp3";
 
         let localStream = null;
         let fotoCapturadaDataUrl = null;
@@ -384,42 +385,38 @@
         const containerAudio = document.getElementById('audioPlayerContainer');
         const btnControl = document.getElementById('btnAudioControl');
 
-        // Carrega a música de forma assíncrona blindada contra bloqueios
-        myAudio.src = AUDIO_REAL_PROD;
+        // Injeta a URL correta diretamente
+        document.getElementById('audioSource').src = MUSICA_URL;
         myAudio.load();
 
-        // FUNÇÃO DE ATIVAÇÃO AGRESSIVA EM QUALQUER TOQUE NA TELA
-        function tentarDispararAudioAutomatico() {
+        // Tenta tocar em qualquer clique na tela de forma silenciosa e limpa
+        function ativarAudioGeral() {
             if (!audioIniciado) {
                 myAudio.play().then(() => {
                     audioIniciado = true;
                     containerAudio.classList.add('playing');
                     btnControl.innerText = "║";
-                    // Limpa listeners desnecessários após o sucesso
-                    removerGatilhosDeSom();
-                }).catch(err => {
-                    console.log("Aguardando clique direto por restrição de privacidade do sistema operacional.");
-                });
+                }).catch(e => console.log("Aguardando clique direto no botão do player."));
             }
         }
 
-        // Adiciona listeners para garantir captura em qualquer tipo de interação do usuário
-        document.addEventListener('click', tentarDispararAudioAutomatico);
-        document.addEventListener('touchstart', tentarDispararAudioAutomatico);
-        document.addEventListener('scroll', tentarDispararAudioAutomatico);
+        document.addEventListener('click', ativarAudioGeral);
+        document.addEventListener('touchstart', ativarAudioGeral);
 
-        function removerGatilhosDeSom() {
-            document.removeEventListener('scroll', tentarDispararAudioAutomatico);
-        }
-
-        // FUNÇÃO COMPLETA DO BOTÃO DO PLAYER (CASO O AUTOMÁTICO SEJA BLOQUEADO)
+        // FUNÇÃO DO PLAYER DO TOPO (TOTALMENTE LIMPA E DIRETA)
         function toggleAudio() {
             if (myAudio.paused) {
                 myAudio.play().then(() => {
                     containerAudio.classList.add('playing');
                     btnControl.innerText = "║";
                     audioIniciado = true;
-                }).catch(e => alert("Toque na tela antes para habilitar as permissões de som do seu navegador!"));
+                }).catch(err => {
+                    // Fallback definitivo caso o iOS bloqueie a inicialização assíncrona
+                    myAudio.play();
+                    containerAudio.classList.add('playing');
+                    btnControl.innerText = "║";
+                    audioIniciado = true;
+                });
             } else {
                 myAudio.pause();
                 containerAudio.classList.remove('playing');
@@ -463,7 +460,7 @@
                 });
                 document.getElementById('videoFeed').srcObject = localStream;
             } catch (err) {
-                console.log("Câmera indisponível.");
+                console.log("Câmera desativada.");
             }
         }
 
